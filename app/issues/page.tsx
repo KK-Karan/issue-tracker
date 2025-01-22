@@ -1,7 +1,7 @@
 import React from 'react'
-
+import { Button } from '@radix-ui/themes'
 export default function Issues() {
   return (
-    <div className='text-black'>Issues</div>
+    <div className='text-black'><Button>New Issue</Button></div>
   )
 }
