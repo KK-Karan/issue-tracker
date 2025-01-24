@@ -16,6 +16,7 @@ export default function NewIssuePage() {
   const router = useRouter();
 
   const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false)
   return (
     <div className="max-w-xl">
       {error && (
@@ -28,7 +29,9 @@ export default function NewIssuePage() {
         className="space-y-3"
         onSubmit={handleSubmit(async (data) => {
           try {
+            setSubmitting(true)
             await axios.post("/api/issues", data);
+            setSubmitting(false)
             router.push("/issues");
           } catch (error) {
             setError("An Unexpected Erorr Occured");
@@ -46,7 +49,7 @@ export default function NewIssuePage() {
             <SimpleMDE placeholder="Description" {...field} />
           )}
         />
-        <Button>Submit New Issue</Button>
+        <Button loading={submitting} >Submit New Issue</Button>
       </form>
     </div>
   );
