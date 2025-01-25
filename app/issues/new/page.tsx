@@ -73,7 +73,7 @@ export default function NewIssuePage() {
             {errors.description?.message}
           </Text>
         )}
-        <Button loading={submitting}>Submit New Issue</Button>
+        <Button loading={submitting} className='hover:cursor-pointer'>Submit New Issue</Button>
       </form>
     </div>
   );
