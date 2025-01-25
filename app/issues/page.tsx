@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Table } from "@radix-ui/themes";
+import { Button, Table, Link as RadixLink } from "@radix-ui/themes";
 import Link from "next/link";
 import { prisma } from "@/prisma/prisma";
 import IssuesStatusBadge from "../components/IssuesStatusBadge";
@@ -26,7 +26,9 @@ export default async function Issues() {
           <Table.Body key={issue.id}>
             <Table.Row>
               <Table.RowHeaderCell>
-              <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
+                <Link href={`/issues/${issue.id}`} passHref legacyBehavior>
+                  <RadixLink>{issue.title}</RadixLink>
+                </Link>
                 <div className="md:hidden">{issue.status}</div>
               </Table.RowHeaderCell>
               <Table.Cell className="hidden md:table-cell">
@@ -40,5 +42,5 @@ export default async function Issues() {
         ))}
       </Table.Root>
     </div>
-  ); 
+  );
 }
