@@ -2,7 +2,7 @@ import IssuesStatusBadge from "@/app/components/IssuesStatusBadge";
 import { prisma } from "@/prisma/prisma";
 import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
-import Markdown from 'react-markdown'
+import Markdown from 'react-markdown';
 export default async function IssueDetails({
   params,
 }: {
