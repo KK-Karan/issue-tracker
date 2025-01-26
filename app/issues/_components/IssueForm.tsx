@@ -7,11 +7,11 @@ import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CreateIssueSchema } from "@/app/validationSchema";
+import { issueSchema } from "@/app/validationSchema";
 import { z } from "zod";
 import { Issue } from "@prisma/client";
 
-type IssueFormData = z.infer<typeof CreateIssueSchema>;
+type IssueFormData = z.infer<typeof issueSchema>;
 
 // interface IssueFormData { // it ensures form data structure during development but doesn't validate the data
 //   title: string;
@@ -19,10 +19,10 @@ type IssueFormData = z.infer<typeof CreateIssueSchema>;
 // }
 
 interface Props {
-  issue?: Issue
+  issue?: Issue;
 }
 
-export default function IssueForm({issue} : Props) {
+export default function IssueForm({ issue }: Props) {
   const {
     register,
     handleSubmit,
@@ -31,7 +31,7 @@ export default function IssueForm({issue} : Props) {
   } = useForm<IssueFormData>({
     // formstate gives info about the state of our form
     // It initializes the react hook form // It tells React Hook Form to expect an object that matches the IssueForm structure.
-    resolver: zodResolver(CreateIssueSchema), // zodResolver handles runtime verification and ensures it matches the schema that we used to send data to db
+    resolver: zodResolver(issueSchema), // zodResolver handles runtime verification and ensures it matches the schema that we used to send data to db
   });
   const router = useRouter();
   const [error, setError] = useState("");
@@ -49,7 +49,8 @@ export default function IssueForm({issue} : Props) {
         onSubmit={handleSubmit(async (data) => {
           try {
             setSubmitting(true);
-            await axios.post("/api/issues", data); // nextjs convention
+            if (issue) await axios.patch("/api/issues/" + issue.id, data);
+            else await axios.post("/api/issues", data); // nextjs convention
             setSubmitting(false);
             router.push("/issues");
           } catch (error) {
@@ -80,7 +81,9 @@ export default function IssueForm({issue} : Props) {
             {errors.description?.message}
           </Text>
         )}
-        <Button loading={submitting} className='hover:cursor-pointer'>{issue ? 'Update the Issue' :"Submit New Issue"}</Button>
+        <Button loading={submitting} className="hover:cursor-pointer">
+          {issue ? "Update Issue" : "Submit New Issue"}
+        </Button>
       </form>
     </div>
   );
