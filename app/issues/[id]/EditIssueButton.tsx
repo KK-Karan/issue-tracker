@@ -5,10 +5,11 @@ import React from "react";
 
 export default function EditIssueButton({resultId} : { resultId: number}) {
   return (
-    <Button className="hover:cursor-pointer">
-      <Pencil1Icon />
-      <Link href={`/issues/${resultId}/edit`}></Link>
-      Edit
+    <Button className="hover:cursor-pointer flex items-center gap-2">
+      <Link href={`/issues/${resultId}/edit`} className="flex items-center gap-2">
+        <Pencil1Icon />
+        <span>Edit</span>
+      </Link>
     </Button>
   );
 }

@@ -9,14 +9,15 @@ export default async function IssueDetailsPage({
   params: { id: string };
 }) {
   // the params object is automatically passed by next.js for dynamic routing
+  const {id} = await params
   const result = await prisma.issue.findUnique({
     where: {
-      id: parseInt(params.id),
+      id: parseInt(id),
     },
   });
 
   if (!result) {
-    notFound();
+    notFound(); // defined in next.js to show 404 page
   }
   return (
     <Grid columns={{ initial: "1", md: "2" }} gap="3">
