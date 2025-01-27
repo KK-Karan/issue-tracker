@@ -38,3 +38,31 @@ export async function PATCH(request: NextRequest , context : {params: {id: strin
     return NextResponse.json(updatedIssue)
 
 }
+
+export async function DELETE(request: NextRequest , context : {params: {id: string}}) {
+   
+    const issue = await prisma.issue.findUnique({ // Prisma automatically generates a lowercased version of the model name (issue) to use in your application code.
+        where: {
+            id: parseInt(context.params.id)
+        }
+    })
+
+    if(!issue) {
+        return NextResponse.json({
+           error: 'Issue not found',
+        }, {
+            status: 404
+        })
+    }
+
+   await prisma.issue.delete({
+        where: {
+            id: parseInt(context.params.id)
+        }
+    })
+
+    return NextResponse.json({})
+
+}
+
+

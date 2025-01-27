@@ -11,5 +11,5 @@ export default function EditIssueButton({resultId} : { resultId: number}) {
         <span>Edit</span>
       </Link>
     </Button>
-  );
+  );  
 }
