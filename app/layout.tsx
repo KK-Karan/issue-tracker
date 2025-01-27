@@ -23,7 +23,9 @@ export default function RootLayout({
       <body>
         <Theme accentColor="violet">
           <NavBar />
-          <main className="p-5"> {children}</main>
+          <div className="max-w-screen-xl mx-auto p-5">
+            <main>{children}</main>
+          </div>{" "}
         </Theme>
       </body>
     </html>

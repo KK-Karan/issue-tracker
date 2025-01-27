@@ -21,7 +21,7 @@ export default function IssueDetails({ result }: Props) {
         <IssuesStatusBadge status={result?.status} />
         <Text>{result?.createdAt.toDateString()}</Text>
       </Flex>
-      <Card className="prose">
+      <Card className="prose max-w-full">
         <Markdown>{result?.description}</Markdown>
       </Card>
     </div>
