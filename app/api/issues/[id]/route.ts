@@ -3,8 +3,8 @@ import { prisma } from "@/prisma/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 
-export async function PATCH(request: NextRequest , {params} : {params: {id: string}}) {
-
+export async function PATCH(request: NextRequest , context : {params: {id: string}}) {
+    const {params} = context
     const data = await request.json() // get the request body
     const validation = issueSchema.safeParse(data) // first we validate the request
 
