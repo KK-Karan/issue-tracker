@@ -8,14 +8,17 @@ import { useState } from "react";
 
 export default function DeleteIssueButton({ resultId }: { resultId: number }) {
   const [error, setError] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const router = useRouter();
 
   const deleteIssue = async () => {
     try {
+      setDeleting(true);
       await axios.delete("/api/issues/" + resultId);
       router.push("/issues");
       router.refresh();
     } catch (error) {
+      setDeleting(true);
       setError(true);
     }
   };
@@ -26,6 +29,8 @@ export default function DeleteIssueButton({ resultId }: { resultId: number }) {
           <Button
             className="hover:cursor-pointer flex items-center gap-2"
             color="red"
+            disabled={deleting}
+            loading={deleting}
           >
             <TrashIcon />
             <span>Delete Issue</span>
