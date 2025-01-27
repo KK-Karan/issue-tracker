@@ -5,10 +5,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import SignIn from "./components/SignInButton";
+import { SignOut } from "./components/SignOutButton";
+import { useSession } from "next-auth/react";
 export default function NavBar() {
   const currentPath = usePathname();
+  const {data : session} = useSession()
+
   return (
-    <nav className="border border-gray-300 w-full h-[60px] flex gap-6 justify-between items-center p-4">
+    <nav className="border border-gray-300 w-full h-[60px] flex gap-6 justify-between items-center p-5">
       <div className="flex flex-row gap-6 justify-center items-center">
         <Link href="/">
           <FaBug className="text-black" />
@@ -37,7 +41,11 @@ export default function NavBar() {
         </h1>
       </div>
 
-      <SignIn />
+
+      <div className="flex flex-row gap-2">
+               {session?.user && <SignOut />}
+    {!session?.user && <SignIn />} 
+      </div>
     </nav>
   );
 }
