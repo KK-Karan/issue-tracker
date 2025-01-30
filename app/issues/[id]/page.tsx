@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import EditIssueButton from "./EditIssueButton";
 import IssueDetails from "./IssueDetails";
 import DeleteIssueButton from "./DeleteIssueButton";
+import AssignSelect from "./AssignSelect";
 export default async function IssueDetailsPage({
   params,
 }: {
@@ -26,6 +27,7 @@ export default async function IssueDetailsPage({
         <IssueDetails result={result} />
       </Box>
       <Flex direction="column" gap="4">
+        <AssignSelect />
         <EditIssueButton resultId={result.id} />
         <DeleteIssueButton resultId={result.id} />
       </Flex>

@@ -7,9 +7,10 @@ import classNames from "classnames";
 import SignIn from "./components/SignInButton";
 import { SignOut } from "./components/SignOutButton";
 import { useSession } from "next-auth/react";
+import { DropdownMenu, Button, Flex, Avatar, Text } from "@radix-ui/themes";
 export default function NavBar() {
   const currentPath = usePathname();
-  const {data : session} = useSession()
+  const { data: session } = useSession();
 
   return (
     <nav className="border border-gray-300 w-full h-[60px] flex gap-6 justify-between items-center p-5">
@@ -41,11 +42,27 @@ export default function NavBar() {
         </h1>
       </div>
 
-
-      <div className="flex flex-row gap-2">
-               {session?.user && <SignOut />}
-    {!session?.user && <SignIn />} 
-      </div>
+      <Flex gap="2" justify={"center"} align={"center"}>
+        {!session?.user && <SignIn />}
+        {session?.user && (
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger>
+              <Avatar
+                src={session?.user?.image || undefined}
+                fallback="U"
+                radius="full"
+                size="3"
+                referrerPolicy="no-referrer"
+              />
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content>
+              <Text>{session?.user?.email}</Text>
+              <DropdownMenu.Separator />
+              {session?.user && <SignOut />}
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
+        )}
+      </Flex>
     </nav>
   );
 }
