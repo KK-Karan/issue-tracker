@@ -27,7 +27,7 @@ export default async function IssueDetailsPage({
         <IssueDetails result={result} />
       </Box>
       <Flex direction="column" gap="4">
-        <AssignSelect />
+        <AssignSelect result = {result} />
         <EditIssueButton resultId={result.id} />
         <DeleteIssueButton resultId={result.id} />
       </Flex>
