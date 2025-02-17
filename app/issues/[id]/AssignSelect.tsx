@@ -3,6 +3,8 @@
 import { Issue, User } from "@prisma/client";
 import { Select, Skeleton } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
+import toast, { Toaster } from 'react-hot-toast';
+
 import axios from "axios";
 
 export default function AssignSelect({ result }: { result: Issue }) {
@@ -36,31 +38,35 @@ export default function AssignSelect({ result }: { result: Issue }) {
         assignedToUserId: userId === "unassigned" ? null : userId, //  naming assignedToUserId in the AssignUser function is important because it must match the expected key in the backend API.
       });
     } catch (error) {
-      console.log(error);
+      console.log(error)
+      toast.error('Cannot Assign User')
     }
   };
 
   return (
-    <Select.Root
-      onValueChange={AssignUser}
-      defaultValue={result.assignedToUserId || "unassigned"}
-    >
-      {/* whenever a user selects an option, onValueChange will pass the value of the selected <Select.Item> to AssignUser. */}
-      <Select.Trigger />
-      <Select.Content>
-        <Select.Group>
-          <Select.Label>Select User</Select.Label>
-          <Select.Item value="unassigned">Unassigned</Select.Item>
-          {users?.map((user) => (
-            <Select.Item
-              key={user.id}
-              value={user.id} // The value={user.id} ensures that when a user is selected, their id is sent to onValueChange.
-            >
-              {user.name}
-            </Select.Item>
-          ))}
-        </Select.Group>
-      </Select.Content>
-    </Select.Root>
+    <>
+      <Select.Root
+        onValueChange={AssignUser}
+        defaultValue={result.assignedToUserId || "unassigned"}
+      >
+        {/* whenever a user selects an option, onValueChange will pass the value of the selected <Select.Item> to AssignUser. */}
+        <Select.Trigger />
+        <Select.Content>
+          <Select.Group>
+            <Select.Label>Select User</Select.Label>
+            <Select.Item value="unassigned">Unassigned</Select.Item>
+            {users?.map((user) => (
+              <Select.Item
+                key={user.id}
+                value={user.id} // The value={user.id} ensures that when a user is selected, their id is sent to onValueChange.
+              >
+                {user.name}
+              </Select.Item>
+            ))}
+          </Select.Group>
+        </Select.Content>
+      </Select.Root>
+      <Toaster />
+    </>
   );
 }
