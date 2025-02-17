@@ -4,7 +4,6 @@ import { User } from "@prisma/client";
 import { Select, Skeleton } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
 
 export default function AssignSelect() {
   const {
