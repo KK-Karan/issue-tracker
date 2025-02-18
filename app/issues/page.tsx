@@ -1,14 +1,19 @@
 import React from "react";
-import { Button, Table, Link as RadixLink } from "@radix-ui/themes";
+import { Button, Table, Link as RadixLink, Flex } from "@radix-ui/themes";
 import Link from "next/link";
 import { prisma } from "@/prisma/prisma";
 import IssuesStatusBadge from "../components/IssuesStatusBadge";
 import IssueButton from "./IssueButton";
+import IssueStatusFilter from "./list/IssueStatusFilter";
 export default async function Issues() {
   const issues = await prisma.issue.findMany();
   return (
     <div className="text-black">
-      <IssueButton />
+      <Flex gap="8" direction="row" justify="between">
+        <IssueStatusFilter />
+        <IssueButton />
+      </Flex>
+
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
